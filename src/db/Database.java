@@ -6,16 +6,16 @@ public class Database {
     private static ArrayList<Entity> entities = new ArrayList<>();
     private static int num = 1;
 
-    public static void add(Entity e){
+    public static void add(Entity e) throws CloneNotSupportedException{
         e.id = num;
         num++;
-        entities.add(e.copy());
+        entities.add(e.clone());
     }
 
-    public static Entity get (int id){
+    public static Entity get (int id) throws CloneNotSupportedException {
         for (Entity temp : entities){
             if(temp.id == id){
-                return temp.copy();
+                return temp.clone();
             }
         }
         throw new EntityNotFoundException();
@@ -31,10 +31,10 @@ public class Database {
         throw new EntityNotFoundException();
     }
 
-    public static void update(Entity e){
+    public static void update(Entity e) throws CloneNotSupportedException{
         for (int i = 0 ; i < entities.size() ; i++){
             if(entities.get(i).id == e.id){
-                entities.set(i , e.copy());
+                entities.set(i , e.clone());
                 return;
             }
             throw new EntityNotFoundException();
