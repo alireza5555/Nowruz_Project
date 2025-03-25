@@ -1,10 +1,13 @@
 package db;
 
+import db.exception.EntityNotFoundException;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Database {
     private static ArrayList<Entity> entities = new ArrayList<>();
     private static int num = 1;
+    private static HashMap<Integer, Validator> validators;
 
     public static void add(Entity e) throws CloneNotSupportedException{
         e.id = num;

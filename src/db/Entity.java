@@ -9,6 +9,7 @@ public abstract class Entity implements Cloneable  {
     public Entity clone() throws CloneNotSupportedException{
         return (Entity) super.clone();
     }
+
 }
 
 
