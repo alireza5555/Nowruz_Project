@@ -1,17 +1,23 @@
 package db;
 
 import db.exception.EntityNotFoundException;
+import db.exception.InvalidEntityException;
+
 import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Database {
     private static ArrayList<Entity> entities = new ArrayList<>();
     private static int num = 1;
-    private static HashMap<Integer, Validator> validators;
+    private static HashMap<Integer, Validator> validators = new HashMap<>();
 
-    public static void add(Entity e) throws CloneNotSupportedException{
+    public static void add(Entity e) throws CloneNotSupportedException, InvalidEntityException {
         e.id = num;
         num++;
+
+        Validator validator = validators.get(e.getEntityCode());
+        validator.validate(e);
+
         entities.add(e.clone());
     }
 
@@ -34,7 +40,11 @@ public class Database {
         throw new EntityNotFoundException();
     }
 
-    public static void update(Entity e) throws CloneNotSupportedException{
+    public static void update(Entity e) throws CloneNotSupportedException, InvalidEntityException {
+
+        Validator validator = validators.get(e.getEntityCode());
+        validator.validate(e);
+
         for (int i = 0 ; i < entities.size() ; i++){
             if(entities.get(i).id == e.id){
                 entities.set(i , e.clone());
@@ -42,5 +52,14 @@ public class Database {
             }
             throw new EntityNotFoundException();
         }
+    }
+
+    public static void registerValidator(int entityCode, Validator validator) {
+
+        if(validators.containsKey(entityCode)){
+            throw new IllegalArgumentException("a validator for this code already exist");
+        }
+
+        validators.put(entityCode, validator);
     }
 }
