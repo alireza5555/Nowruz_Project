@@ -1,9 +1,14 @@
 package db;
 
-public abstract class Entity  {
+import example.Human;
+
+public abstract class Entity implements Cloneable  {
     public int id;
 
-    public abstract Entity copy();
+    @Override
+    public Entity clone() throws CloneNotSupportedException{
+        return (Entity) super.clone();
+    }
 }
 
 
