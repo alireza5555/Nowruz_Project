@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class  Document extends Entity implements Trackable {
 
-    String content;
+    public String content;
 
     public Document (String content){
         this.content = content;
@@ -20,21 +20,21 @@ public class  Document extends Entity implements Trackable {
 
     @Override
     public void setCreationDate(Date date) {
-
+        this.creationDate = new Date(date.getTime());
     }
 
     @Override
     public Date getCreationDate() {
-        return null;
+        return creationDate;
     }
 
     @Override
     public void setLastModificationDate(Date date) {
-
+        this.lastModificationDate = new Date(date.getTime());
     }
 
     @Override
     public Date getLastModificationDate() {
-        return null;
+        return lastModificationDate;
     }
 }
