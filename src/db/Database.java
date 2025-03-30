@@ -2,6 +2,7 @@ package db;
 
 import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
+import java.util.Date;
 
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -16,7 +17,15 @@ public class Database {
         num++;
 
         Validator validator = validators.get(e.getEntityCode());
+        if(validator != null)
         validator.validate(e);
+
+        if(e instanceof Trackable){
+            Trackable trackableEntity = (Trackable) e;
+            Date now = new Date();
+            trackableEntity.setCreationDate(now);
+            trackableEntity.setLastModificationDate(now);
+        }
 
         entities.add(e.clone());
     }
@@ -43,7 +52,14 @@ public class Database {
     public static void update(Entity e) throws CloneNotSupportedException, InvalidEntityException {
 
         Validator validator = validators.get(e.getEntityCode());
+        if (validator != null)
         validator.validate(e);
+
+        if(e instanceof Trackable){
+            Trackable trackableEntity = (Trackable) e;
+            Date now = new Date();
+            trackableEntity.setLastModificationDate(now);
+        }
 
         for (int i = 0 ; i < entities.size() ; i++){
             if(entities.get(i).id == e.id){

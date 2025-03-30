@@ -1,10 +1,11 @@
 package db;
 
-import example.Human;
+import java.util.Date;
 
 public abstract class Entity implements Cloneable  {
     public int id;
-
+    protected Date creationDate;
+    protected Date lastModificationDate;
     @Override
     public Entity clone() throws CloneNotSupportedException{
         return (Entity) super.clone();
